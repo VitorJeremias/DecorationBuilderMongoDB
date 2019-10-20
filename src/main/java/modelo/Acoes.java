@@ -33,6 +33,7 @@ public class Acoes {
 	public static String medalRewardRatio;
 	public static String coinRewardRatio;
 	public static String supplyRewardRatio;
+	public static boolean questDone = false;
 
 	public Acoes() throws UnknownHostException {
 		List<Integer> quantidades = dbm.getQuantidades();
@@ -66,18 +67,29 @@ public class Acoes {
 
 	public void iniciarPrograma() throws AWTException, UnknownHostException {
 		for (int i = 0; i < REPETICOES; i++) {
+			questDone = false;
 			System.out.println("######################## ITERAÇÃO " + (i + 1) + " ########################");
 			deletarDecoracoes();
 			colocarDecoracoes();
-			Utils.wait(6000);
+			while(!questDone) {
+				questDone = verificaSeQuestDone();
+			}
 			menuQuests();
 			Utils.wait(100);
 			checkReward();
 			coletarRecompensa();
 			dbm.updateData();
+			verificaSeQuestDone();
 			verificaSeQuestEhDecoracoes();
 			menuQuests();
 		}
+	}
+	
+	public boolean verificaSeQuestDone() {
+		ImageManager im = new ImageManager();
+		boolean foundQuestDone = im
+				.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\questDone.png");
+		return foundQuestDone;
 	}
 
 	public void coletarRecompensa() {
@@ -137,12 +149,14 @@ public class Acoes {
 
 	public void verificaSeQuestEhDecoracoes() {
 		ImageManager im = new ImageManager();
-		boolean questCerta = im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\quest.png");
+		boolean questCerta = im
+				.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\quest.png");
 		int jumps = 0;
 		int iterations = 0;
 		while (!questCerta) {
 			Utils.wait(4500 / (SPEED_MULTIPLIER));
-			questCerta = im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\quest.png");
+			questCerta = im
+					.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\quest.png");
 			if (!questCerta) {
 				BasicKeys.dois();
 				BasicKeys.tres();
@@ -180,7 +194,7 @@ public class Acoes {
 
 	public void checkRewardAIData() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\AIData.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\AIData.png")) {
 			aiDataReward++;
 			System.err.println("REWARD: AI DATA");
 		}
@@ -188,7 +202,7 @@ public class Acoes {
 
 	public void checkRewardMedal() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\medal.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\medal.png")) {
 			medalReward++;
 			System.err.println("REWARD: MEDAL");
 		}
@@ -196,7 +210,7 @@ public class Acoes {
 
 	public void checkRewardPlanta() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\planta.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\planta.png")) {
 			plantaReward++;
 			System.err.println("REWARD: PLANTA");
 		}
@@ -204,7 +218,7 @@ public class Acoes {
 
 	public void checkRewardNanofio() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\nanofio.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\nanofio.png")) {
 			nanofioReward++;
 			System.err.println("REWARD: NANOFIO");
 		}
@@ -212,7 +226,7 @@ public class Acoes {
 
 	public void checkRewardCoin() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\coin.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\coin.png")) {
 			coinReward++;
 			System.err.println("REWARD: COIN");
 		}
@@ -220,7 +234,7 @@ public class Acoes {
 
 	public void checkRewardBateria() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\bateria.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\bateria.png")) {
 			bateriaReward++;
 			System.err.println("REWARD: BATERIA");
 		}
@@ -228,7 +242,7 @@ public class Acoes {
 
 	public void checkRewardSupply() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\supply.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\supply.png")) {
 			supplyReward++;
 			System.err.println("REWARD: SUPPLY");
 		}
@@ -236,7 +250,8 @@ public class Acoes {
 
 	public void checkRewardBioplastico() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\bioplastico.png")) {
+		if (im.isOnScreen(
+				"C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\bioplastico.png")) {
 			bioplasticoReward++;
 			System.err.println("REWARD: BIOPLÁSTICO");
 		}
@@ -244,7 +259,7 @@ public class Acoes {
 
 	public void checkRewardPF() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\pf.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\pf.png")) {
 			pfReward++;
 			System.err.println("REWARD: PF");
 		}
@@ -252,7 +267,7 @@ public class Acoes {
 
 	public void checkRewardGasolina() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\gasolina.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\gasolina.png")) {
 			gasolinaReward++;
 			System.err.println("REWARD: GASOLINA");
 		}
