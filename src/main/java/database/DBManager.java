@@ -26,9 +26,9 @@ public class DBManager {
 	}
 
 	public DB getDB() throws UnknownHostException {
+		@SuppressWarnings("deprecation")
 		DB db = mongoClient.getDB("db");
-		
-		
+
 		return db;
 
 	}

@@ -15,7 +15,7 @@ public class InputManager {
 			e.printStackTrace();
 		}	
 		
-		Utils.wait(1500/Acoes.SPEED_MULTIPLIER);
+		Utils.wait(1400/Acoes.SPEED_MULTIPLIER);
 		
 	}
 	
@@ -33,6 +33,17 @@ public class InputManager {
 		try {
 			robot = new Robot();
 			robot.mouseWheel(-1);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void zoomOut() {
+		Robot robot;
+		try {
+			robot = new Robot();
+			robot.mouseWheel(1);
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

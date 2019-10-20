@@ -22,6 +22,17 @@ public class Acoes {
 	public static int medalReward = 0;
 	public static int coinReward = 0;
 	public static int supplyReward = 0;
+	public static int totalRewards = 0;
+	public static String plantaRewardRatio;
+	public static String pfRewardRatio;
+	public static String aiDataRewardRatio;
+	public static String bioplasticoRewardRatio;
+	public static String nanofioRewardRatio;
+	public static String bateriaRewardRatio;
+	public static String gasolinaRewardRatio;
+	public static String medalRewardRatio;
+	public static String coinRewardRatio;
+	public static String supplyRewardRatio;
 
 	public Acoes() throws UnknownHostException {
 		List<Integer> quantidades = dbm.getQuantidades();
@@ -35,6 +46,22 @@ public class Acoes {
 		medalReward = quantidades.get(7);
 		coinReward = quantidades.get(8);
 		supplyReward = quantidades.get(9);
+		totalRewards = plantaReward + pfReward + aiDataReward + bioplasticoReward + nanofioReward + bateriaReward
+				+ gasolinaReward + medalReward + coinReward + supplyReward;
+		// for (int i = 0; i < quantidades.size(); i++) {
+		// totalRewards = totalRewards + quantidades.get(i);
+		// }
+		plantaRewardRatio = String.format("%.02f", 100 * (double) plantaReward / (double) totalRewards);
+		pfRewardRatio = String.format("%.02f", 100 * (double) pfReward / (double) totalRewards);
+		aiDataRewardRatio = String.format("%.02f", 100 * (double) aiDataReward / (double) totalRewards);
+		bioplasticoRewardRatio = String.format("%.02f", 100 * (double) bioplasticoReward / (double) totalRewards);
+		nanofioRewardRatio = String.format("%.02f", 100 * (double) nanofioReward / (double) totalRewards);
+		bateriaRewardRatio = String.format("%.02f", 100 * (double) bateriaReward / (double) totalRewards);
+		gasolinaRewardRatio = String.format("%.02f", 100 * (double) gasolinaReward / (double) totalRewards);
+		medalRewardRatio = String.format("%.02f", 100 * (double) medalReward / (double) totalRewards);
+		coinRewardRatio = String.format("%.02f", 100 * (double) coinReward / (double) totalRewards);
+		supplyRewardRatio = String.format("%.02f", 100 * (double) supplyReward / (double) totalRewards);
+
 	}
 
 	public void iniciarPrograma() throws AWTException, UnknownHostException {
@@ -42,11 +69,10 @@ public class Acoes {
 			System.out.println("######################## ITERAÇÃO " + (i + 1) + " ########################");
 			deletarDecoracoes();
 			colocarDecoracoes();
-			Utils.wait(2000);
+			Utils.wait(6000);
 			menuQuests();
 			Utils.wait(100);
 			checkReward();
-			Utils.wait(100);
 			coletarRecompensa();
 			dbm.updateData();
 			verificaSeQuestEhDecoracoes();
@@ -111,24 +137,50 @@ public class Acoes {
 
 	public void verificaSeQuestEhDecoracoes() {
 		ImageManager im = new ImageManager();
-		boolean questCerta = im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\quest.png");
+		boolean questCerta = im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\quest.png");
 		int jumps = 0;
+		int iterations = 0;
 		while (!questCerta) {
 			Utils.wait(4500 / (SPEED_MULTIPLIER));
-			questCerta = im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\quest.png");
+			questCerta = im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\quest.png");
 			if (!questCerta) {
 				BasicKeys.dois();
 				BasicKeys.tres();
 				jumps++;
 				System.out.println("Pulou " + jumps);
+				if (jumps > 90) {
+					resetQuestCheck();
+					jumps = 0;
+					checkReward();
+					if (iterations > 2) {
+						deletarDecoracoes();
+						colocarDecoracoes();
+						Utils.wait(2000);
+						iterations = 0;
+						for (int i = 0; i < 4; i++) {
+							InputManager.zoomOut();
+						}
+					}
+				}
 			}
+			iterations++;
 		}
 		Utils.wait(2000);
 	}
 
+	public void resetQuestCheck() {
+		System.err.println(new Object() {
+		}.getClass().getEnclosingMethod().getName());
+		menuQuests();
+		Utils.wait(2000);
+		menuQuests();
+		Utils.wait(2000);
+		coletarRecompensa();
+	}
+
 	public void checkRewardAIData() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\AIData.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\AIData.png")) {
 			aiDataReward++;
 			System.err.println("REWARD: AI DATA");
 		}
@@ -136,7 +188,7 @@ public class Acoes {
 
 	public void checkRewardMedal() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\medal.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\medal.png")) {
 			medalReward++;
 			System.err.println("REWARD: MEDAL");
 		}
@@ -144,7 +196,7 @@ public class Acoes {
 
 	public void checkRewardPlanta() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\planta.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\planta.png")) {
 			plantaReward++;
 			System.err.println("REWARD: PLANTA");
 		}
@@ -152,7 +204,7 @@ public class Acoes {
 
 	public void checkRewardNanofio() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\nanofio.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\nanofio.png")) {
 			nanofioReward++;
 			System.err.println("REWARD: NANOFIO");
 		}
@@ -160,7 +212,7 @@ public class Acoes {
 
 	public void checkRewardCoin() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\coin.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\coin.png")) {
 			coinReward++;
 			System.err.println("REWARD: COIN");
 		}
@@ -168,7 +220,7 @@ public class Acoes {
 
 	public void checkRewardBateria() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\bateria.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\bateria.png")) {
 			bateriaReward++;
 			System.err.println("REWARD: BATERIA");
 		}
@@ -176,7 +228,7 @@ public class Acoes {
 
 	public void checkRewardSupply() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\supply.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\supply.png")) {
 			supplyReward++;
 			System.err.println("REWARD: SUPPLY");
 		}
@@ -184,7 +236,7 @@ public class Acoes {
 
 	public void checkRewardBioplastico() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\bioplastico.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\bioplastico.png")) {
 			bioplasticoReward++;
 			System.err.println("REWARD: BIOPLÁSTICO");
 		}
@@ -192,7 +244,7 @@ public class Acoes {
 
 	public void checkRewardPF() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\pf.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\pf.png")) {
 			pfReward++;
 			System.err.println("REWARD: PF");
 		}
@@ -200,7 +252,7 @@ public class Acoes {
 
 	public void checkRewardGasolina() {
 		ImageManager im = new ImageManager();
-		if (im.isOnScreen("C:\\Users\\Vitor\\Downloads\\foe\\gasolina.png")) {
+		if (im.isOnScreen("C:\\Users\\Vitor\\git\\mongoDB\\resources\\gasolina.png")) {
 			gasolinaReward++;
 			System.err.println("REWARD: GASOLINA");
 		}
@@ -221,16 +273,16 @@ public class Acoes {
 	}
 
 	public void showCurrentRewards() {
-		System.out.println("Planta: " + plantaReward);
-		System.out.println("PF: " + pfReward);
-		System.out.println("AIData: " + aiDataReward);
-		System.out.println("Bioplastico: " + bioplasticoReward);
-		System.out.println("Nanofio: " + nanofioReward);
-		System.out.println("Bateria: " + bateriaReward);
-		System.out.println("Gasolina: " + gasolinaReward);
-		System.out.println("Medal: " + medalReward);
-		System.out.println("Coin: " + coinReward);
-		System.out.println("Suppy: " + supplyReward);
+		System.out.println("Planta: " + plantaReward + " (" + plantaRewardRatio + "%)");
+		System.out.println("PF: " + pfReward + " (" + pfRewardRatio + "%)");
+		System.out.println("AIData: " + aiDataReward + " (" + aiDataRewardRatio + "%)");
+		System.out.println("Bioplastico: " + bioplasticoReward + " (" + bioplasticoRewardRatio + "%)");
+		System.out.println("Nanofio: " + nanofioReward + " (" + nanofioRewardRatio + "%)");
+		System.out.println("Bateria: " + bateriaReward + " (" + bateriaRewardRatio + "%)");
+		System.out.println("Gasolina: " + gasolinaReward + " (" + gasolinaRewardRatio + "%)");
+		System.out.println("Medal: " + medalReward + " (" + medalRewardRatio + "%)");
+		System.out.println("Coin: " + coinReward + " (" + coinRewardRatio + "%)");
+		System.out.println("Suppy: " + supplyReward + " (" + supplyRewardRatio + "%)");
 	}
 
 	public static int getPlantaReward() {
