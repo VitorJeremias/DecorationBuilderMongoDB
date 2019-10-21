@@ -100,4 +100,52 @@ public class BasicKeys {
 		// }.getClass().getEnclosingMethod().getName());
 	}
 
+	public static void f5() {
+		InputManager.digitar(KeyEvent.VK_F5);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
+	public static void esc() {
+		InputManager.digitar(KeyEvent.VK_ESCAPE);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
+	public static void apertarS() {
+		InputManager.digitar(KeyEvent.VK_S);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
+	public static void soltarS() {
+		InputManager.soltar(KeyEvent.VK_S);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
+	public static void apertarD() {
+		InputManager.digitar(KeyEvent.VK_D);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
+	public static void soltarD() {
+		InputManager.soltar(KeyEvent.VK_S);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+	
+	public static void b() {
+		InputManager.digitar(KeyEvent.VK_B);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+	
+	public static void cinco() {
+		InputManager.digitar(KeyEvent.VK_5);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
 }

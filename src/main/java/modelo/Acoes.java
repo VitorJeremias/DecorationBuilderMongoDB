@@ -68,17 +68,28 @@ public class Acoes {
 
 	public void iniciarPrograma() throws AWTException, UnknownHostException {
 		for (int i = 0; i < REPETICOES; i++) {
+			int questChecks = 0;
 			questDone = false;
 			System.out.println("############################# ITERAÇÃO " + (i + 1) + " #############################");
 			deletarDecoracoes();
 			colocarDecoracoes();
 			while (!questDone) {
+				Utils.wait(500);
 				questDone = verificaSeQuestDone();
+				questChecks++;
+				if (questChecks > 20) {
+					refreshPage();
+					break;
+				}
 			}
 			menuQuests();
 			Utils.wait(100);
 			checkReward();
 			coletarRecompensa();
+			for (int j = 0; j < 10; j++) {
+				InputManager.zoomOut();
+				Utils.wait(100);
+			}
 			dbm.updateData();
 			verificaSeQuestDone();
 			verificaSeQuestEhDecoracoes();
@@ -149,7 +160,6 @@ public class Acoes {
 	public void verificaSeQuestEhDecoracoes() {
 		boolean questCerta = images.hasImage("quest");
 		int jumps = 0;
-		int iterations = 0;
 		while (!questCerta) {
 			Utils.wait(4500 / (SPEED_MULTIPLIER));
 			questCerta = images.hasImage("quest");
@@ -159,33 +169,36 @@ public class Acoes {
 				jumps++;
 				System.out.println("Pulou " + jumps);
 				if (jumps > 90) {
-					resetQuestCheck();
+					refreshPage();
 					jumps = 0;
-					checkReward();
-					if (iterations > 2) {
-						deletarDecoracoes();
-						colocarDecoracoes();
-						Utils.wait(2000);
-						iterations = 0;
-						for (int i = 0; i < 4; i++) {
-							InputManager.zoomOut();
-						}
-					}
 				}
 			}
-			iterations++;
 		}
 		Utils.wait(2000);
 	}
 
-	public void resetQuestCheck() {
-		System.err.println(new Object() {
-		}.getClass().getEnclosingMethod().getName());
-		menuQuests();
-		Utils.wait(2000);
-		menuQuests();
-		Utils.wait(2000);
-		coletarRecompensa();
+	public void refreshPage() {
+		BasicKeys.f5();
+		Utils.wait(10000);
+		BasicKeys.esc();
+		InputManager.zoomIn();
+		Utils.wait(1000);
+		InputManager.zoomIn();
+		Utils.wait(1000);
+		InputManager.zoomOut();
+		Utils.wait(1000);
+		BasicKeys.apertarS();
+		BasicKeys.apertarD();
+		Utils.wait(4000);
+		BasicKeys.apertarS();
+		Utils.wait(100);
+		BasicKeys.soltarS(); // termina o posicionamento da tela
+		BasicKeys.apertarD();
+		Utils.wait(100);
+		BasicKeys.soltarD();
+		BasicKeys.b(); // abre menu de construcao
+		Utils.wait(1000);
+		BasicKeys.cinco(); // decoracoes
 	}
 
 	public void checkRewardAIData() {
