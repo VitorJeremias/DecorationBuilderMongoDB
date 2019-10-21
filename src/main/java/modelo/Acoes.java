@@ -69,7 +69,7 @@ public class Acoes {
 	public void iniciarPrograma() throws AWTException, UnknownHostException {
 		for (int i = 0; i < REPETICOES; i++) {
 			questDone = false;
-			System.out.println("######################## ITERAÇÃO " + (i + 1) + " ########################");
+			System.out.println("############################# ITERAÇÃO " + (i + 1) + " #############################");
 			deletarDecoracoes();
 			colocarDecoracoes();
 			while (!questDone) {
@@ -87,9 +87,7 @@ public class Acoes {
 	}
 
 	public boolean verificaSeQuestDone() {
-		ImageManager im = new ImageManager();
-		boolean foundQuestDone = im
-				.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\questDone.png");
+		boolean foundQuestDone = images.hasImage("questDone");
 		return foundQuestDone;
 	}
 
@@ -149,15 +147,12 @@ public class Acoes {
 	}
 
 	public void verificaSeQuestEhDecoracoes() {
-		ImageManager im = new ImageManager();
-		boolean questCerta = im
-				.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\quest.png");
+		boolean questCerta = images.hasImage("quest");
 		int jumps = 0;
 		int iterations = 0;
 		while (!questCerta) {
 			Utils.wait(4500 / (SPEED_MULTIPLIER));
-			questCerta = im
-					.isOnScreen("C:\\Users\\Vitor\\eclipse-workspace\\DecorationBuilderMongoDB\\resources\\quest.png");
+			questCerta = images.hasImage("quest");
 			if (!questCerta) {
 				BasicKeys.dois();
 				BasicKeys.tres();
