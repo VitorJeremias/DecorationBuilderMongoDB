@@ -2,15 +2,13 @@ package modelo;
 
 import java.awt.AWTException;
 import java.net.UnknownHostException;
-import java.util.List;
 
-import database.DBManager;
 import utils.Utils;
 
 public class Acoes {
-	public final Integer REPETICOES = 1000;
+	public final Integer REPETICOES = 10000;
 	public static final Integer SPEED_MULTIPLIER = 4;
-	DBManager dbm = new DBManager();
+	// DBManager dbm = new DBManager();
 	Images images = new Images();
 
 	public static int plantaReward = 0;
@@ -37,48 +35,65 @@ public class Acoes {
 	public static boolean questDone = false;
 
 	public Acoes() throws UnknownHostException {
-		List<Integer> quantidades = dbm.getQuantidades();
-		plantaReward = quantidades.get(0);
-		pfReward = quantidades.get(1);
-		aiDataReward = quantidades.get(2);
-		bioplasticoReward = quantidades.get(3);
-		nanofioReward = quantidades.get(4);
-		bateriaReward = quantidades.get(5);
-		gasolinaReward = quantidades.get(6);
-		medalReward = quantidades.get(7);
-		coinReward = quantidades.get(8);
-		supplyReward = quantidades.get(9);
-		totalRewards = plantaReward + pfReward + aiDataReward + bioplasticoReward + nanofioReward + bateriaReward
-				+ gasolinaReward + medalReward + coinReward + supplyReward;
-		// for (int i = 0; i < quantidades.size(); i++) {
-		// totalRewards = totalRewards + quantidades.get(i);
-		// }
-		plantaRewardRatio = String.format("%.02f", 100 * (double) plantaReward / (double) totalRewards);
-		pfRewardRatio = String.format("%.02f", 100 * (double) pfReward / (double) totalRewards);
-		aiDataRewardRatio = String.format("%.02f", 100 * (double) aiDataReward / (double) totalRewards);
-		bioplasticoRewardRatio = String.format("%.02f", 100 * (double) bioplasticoReward / (double) totalRewards);
-		nanofioRewardRatio = String.format("%.02f", 100 * (double) nanofioReward / (double) totalRewards);
-		bateriaRewardRatio = String.format("%.02f", 100 * (double) bateriaReward / (double) totalRewards);
-		gasolinaRewardRatio = String.format("%.02f", 100 * (double) gasolinaReward / (double) totalRewards);
-		medalRewardRatio = String.format("%.02f", 100 * (double) medalReward / (double) totalRewards);
-		coinRewardRatio = String.format("%.02f", 100 * (double) coinReward / (double) totalRewards);
-		supplyRewardRatio = String.format("%.02f", 100 * (double) supplyReward / (double) totalRewards);
+		// List<Integer> quantidades = dbm.getQuantidades();
+		// plantaReward = quantidades.get(0);
+		// pfReward = quantidades.get(1);
+		// aiDataReward = quantidades.get(2);
+		// bioplasticoReward = quantidades.get(3);
+		// nanofioReward = quantidades.get(4);
+		// bateriaReward = quantidades.get(5);
+		// gasolinaReward = quantidades.get(6);
+		// medalReward = quantidades.get(7);
+		// coinReward = quantidades.get(8);
+		// supplyReward = quantidades.get(9);
+		// totalRewards = plantaReward + pfReward + aiDataReward + bioplasticoReward + nanofioReward + bateriaReward
+		// + gasolinaReward + medalReward + coinReward + supplyReward;
+		// plantaRewardRatio = String.format("%.02f", 100 * (double) plantaReward / (double) totalRewards);
+		// pfRewardRatio = String.format("%.02f", 100 * (double) pfReward / (double) totalRewards);
+		// aiDataRewardRatio = String.format("%.02f", 100 * (double) aiDataReward / (double) totalRewards);
+		// bioplasticoRewardRatio = String.format("%.02f", 100 * (double) bioplasticoReward / (double) totalRewards);
+		// nanofioRewardRatio = String.format("%.02f", 100 * (double) nanofioReward / (double) totalRewards);
+		// bateriaRewardRatio = String.format("%.02f", 100 * (double) bateriaReward / (double) totalRewards);
+		// gasolinaRewardRatio = String.format("%.02f", 100 * (double) gasolinaReward / (double) totalRewards);
+		// medalRewardRatio = String.format("%.02f", 100 * (double) medalReward / (double) totalRewards);
+		// coinRewardRatio = String.format("%.02f", 100 * (double) coinReward / (double) totalRewards);
+		// supplyRewardRatio = String.format("%.02f", 100 * (double) supplyReward / (double) totalRewards);
 
 	}
 
-	public void iniciarPrograma() throws AWTException, UnknownHostException {
+	public void iniciarPrograma() throws AWTException, UnknownHostException, InterruptedException {
 		for (int i = 0; i < REPETICOES; i++) {
+
+			Utils.printRunningTime();
+			Utils.printAverageTime(i);
+			Utils.printMedalsPerHour(i);
 			int questChecks = 0;
+			int questChecks2 = 0;
 			questDone = false;
 			System.out.println("############################# ITERAÇÃO " + (i + 1) + " #############################");
 			deletarDecoracoes();
 			colocarDecoracoes();
+			if (Utils.isMidNight()) {
+				coletarMissaoEspecialMeiaNoite();
+			}
 			while (!questDone) {
-				Utils.wait(500);
+				Utils.wait(1000);
 				questDone = verificaSeQuestDone();
 				questChecks++;
-				if (questChecks > 20) {
+				questChecks2++;
+				if (questChecks % 10 == 0) {
+					System.out.println("verificando quest: " + questChecks + "%");
+				}
+				if (questChecks > 75) {
+					if (questChecks2 > 150) {
+						menuQuests();
+						Utils.wait(300);
+						coletarRecompensa();
+						questChecks2 = 0;
+						break;
+					}
 					refreshPage();
+					questChecks = 0;
 					break;
 				}
 			}
@@ -90,11 +105,29 @@ public class Acoes {
 				InputManager.zoomOut();
 				Utils.wait(100);
 			}
-			dbm.updateData();
+			// if (i % 10 == 0) {
+			// dbm.updateData();
+			// }
 			verificaSeQuestDone();
 			verificaSeQuestEhDecoracoes();
 			menuQuests();
 		}
+	}
+
+	public void coletarMissaoEspecialMeiaNoite() throws InterruptedException {
+		System.err.println(new Object() {
+		}.getClass().getEnclosingMethod().getName());
+		BasicKeys.oito();
+		Thread.sleep(1500);
+		BasicKeys.nove();
+		Thread.sleep(1500);
+		BasicKeys.q();
+		Thread.sleep(1500);
+
+		BasicKeys.zero();
+		Thread.sleep(1500);
+		BasicKeys.sete();
+		Thread.sleep(1500);
 	}
 
 	public boolean verificaSeQuestDone() {
@@ -178,27 +211,34 @@ public class Acoes {
 	}
 
 	public void refreshPage() {
-		BasicKeys.f5();
-		Utils.wait(10000);
+		BasicKeys.seis();
+		Utils.wait(15000);
 		BasicKeys.esc();
+		Utils.wait(300);
+		BasicKeys.apertarBaixo();
+		BasicKeys.apertarDireita();
+		Utils.wait(4000);
+		BasicKeys.apertarBaixo();
+		BasicKeys.apertarDireita();
+		Utils.wait(100);
+		BasicKeys.soltarBaixo(); // termina o posicionamento da tela
+		Utils.wait(100);
+		BasicKeys.soltarDireita();
+		Utils.wait(200);
+		BasicKeys.sete();
+		Utils.wait(200);
 		InputManager.zoomIn();
 		Utils.wait(1000);
 		InputManager.zoomIn();
 		Utils.wait(1000);
 		InputManager.zoomOut();
 		Utils.wait(1000);
-		BasicKeys.apertarS();
-		BasicKeys.apertarD();
-		Utils.wait(4000);
-		BasicKeys.apertarS();
-		Utils.wait(100);
-		BasicKeys.soltarS(); // termina o posicionamento da tela
-		BasicKeys.apertarD();
-		Utils.wait(100);
-		BasicKeys.soltarD();
 		BasicKeys.b(); // abre menu de construcao
 		Utils.wait(1000);
 		BasicKeys.cinco(); // decoracoes
+		Utils.wait(200);
+		deletarDecoracoes();
+		colocarDecoracoes();
 	}
 
 	public void checkRewardAIData() {
@@ -376,5 +416,9 @@ public class Acoes {
 
 	public static void setSupplyReward(int supplyReward) {
 		Acoes.supplyReward = supplyReward;
+	}
+
+	public static int getTotalRewards() {
+		return totalRewards;
 	}
 }

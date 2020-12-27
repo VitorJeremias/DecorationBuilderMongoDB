@@ -17,7 +17,7 @@ public class BasicKeys {
 	}
 
 	public static void umNumerico() {
-		InputManager.digitar(KeyEvent.VK_NUMPAD1);
+		InputManager.digitarRapido(KeyEvent.VK_NUMPAD1);
 		// System.out.println(new Object() {
 		// }.getClass().getEnclosingMethod().getName());
 	}
@@ -70,6 +70,12 @@ public class BasicKeys {
 		// }.getClass().getEnclosingMethod().getName());
 	}
 
+	public static void zero() {
+		InputManager.digitar(KeyEvent.VK_0);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
 	public static void um() {
 		InputManager.digitar(KeyEvent.VK_1);
 		// System.out.println(new Object() {
@@ -94,14 +100,38 @@ public class BasicKeys {
 		// }.getClass().getEnclosingMethod().getName());
 	}
 
-	public static void maisNumerico() {
-		InputManager.digitar(KeyEvent.VK_ADD);
+	public static void cinco() {
+		InputManager.digitar(KeyEvent.VK_5);
 		// System.out.println(new Object() {
 		// }.getClass().getEnclosingMethod().getName());
 	}
 
-	public static void f5() {
-		InputManager.digitar(KeyEvent.VK_F5);
+	public static void seis() {
+		InputManager.digitarRapido(KeyEvent.VK_6);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
+	public static void sete() {
+		InputManager.digitar(KeyEvent.VK_7);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
+	public static void oito() {
+		InputManager.digitar(KeyEvent.VK_8);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
+	public static void nove() {
+		InputManager.digitar(KeyEvent.VK_9);
+		// System.out.println(new Object() {
+		// }.getClass().getEnclosingMethod().getName());
+	}
+
+	public static void maisNumerico() {
+		InputManager.digitar(KeyEvent.VK_ADD);
 		// System.out.println(new Object() {
 		// }.getClass().getEnclosingMethod().getName());
 	}
@@ -112,38 +142,32 @@ public class BasicKeys {
 		// }.getClass().getEnclosingMethod().getName());
 	}
 
-	public static void apertarS() {
-		InputManager.digitar(KeyEvent.VK_S);
+	public static void apertarBaixo() {
+		InputManager.digitar(KeyEvent.VK_DOWN);
 		// System.out.println(new Object() {
 		// }.getClass().getEnclosingMethod().getName());
 	}
 
-	public static void soltarS() {
-		InputManager.soltar(KeyEvent.VK_S);
+	public static void soltarBaixo() {
+		InputManager.soltar(KeyEvent.VK_DOWN);
 		// System.out.println(new Object() {
 		// }.getClass().getEnclosingMethod().getName());
 	}
 
-	public static void apertarD() {
-		InputManager.digitar(KeyEvent.VK_D);
+	public static void apertarDireita() {
+		InputManager.digitar(KeyEvent.VK_RIGHT);
 		// System.out.println(new Object() {
 		// }.getClass().getEnclosingMethod().getName());
 	}
 
-	public static void soltarD() {
-		InputManager.soltar(KeyEvent.VK_S);
+	public static void soltarDireita() {
+		InputManager.soltar(KeyEvent.VK_RIGHT);
 		// System.out.println(new Object() {
 		// }.getClass().getEnclosingMethod().getName());
 	}
-	
+
 	public static void b() {
 		InputManager.digitar(KeyEvent.VK_B);
-		// System.out.println(new Object() {
-		// }.getClass().getEnclosingMethod().getName());
-	}
-	
-	public static void cinco() {
-		InputManager.digitar(KeyEvent.VK_5);
 		// System.out.println(new Object() {
 		// }.getClass().getEnclosingMethod().getName());
 	}

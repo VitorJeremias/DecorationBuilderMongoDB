@@ -15,7 +15,7 @@ public class InputManager {
 			e.printStackTrace();
 		}
 
-		Utils.wait(1400 / Acoes.SPEED_MULTIPLIER);
+		Utils.wait(980 / Acoes.SPEED_MULTIPLIER);
 
 	}
 
@@ -27,7 +27,7 @@ public class InputManager {
 			e.printStackTrace();
 		}
 
-		Utils.wait(1400 / Acoes.SPEED_MULTIPLIER);
+		// Utils.wait(1400 / Acoes.SPEED_MULTIPLIER);
 
 	}
 
@@ -46,7 +46,6 @@ public class InputManager {
 			robot = new Robot();
 			robot.mouseWheel(-1);
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -57,9 +56,22 @@ public class InputManager {
 			robot = new Robot();
 			robot.mouseWheel(1);
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	
+	public static void main(String[] args) {
+		int an = 226400;
+		int n = 0;
+		int r = 50;
+		long soma = an;
+		
+		while (soma<15000000000L) {
+			an = an+r;
+			soma = soma + an;
+			n++;
+		}
+		System.out.println(n);
+	}
 }
