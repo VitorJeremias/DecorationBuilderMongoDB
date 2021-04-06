@@ -64,7 +64,7 @@ public class Utils {
 		} else {
 			isZeroHour = false;
 		}
-		if (minute > 0 && minute < 5) {
+		if (minute > 0 && minute < 10) {
 			isZeroMinute = true;
 		} else {
 			isZeroMinute = false;

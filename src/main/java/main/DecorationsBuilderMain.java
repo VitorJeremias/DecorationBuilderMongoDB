@@ -1,14 +1,16 @@
 package main;
 
-import java.awt.AWTException;
-import java.net.UnknownHostException;
-
 import modelo.Acoes;
+import modelo.BasicKeys;
+import modelo.Wait;
+import utils.FileManager;
 
 public class DecorationsBuilderMain {
-	public static void main(String[] args) throws UnknownHostException, AWTException, InterruptedException {
+	public static void main(String[] args) {
+		FileManager.runAhkScript();
 		Acoes acoes = new Acoes();
-		Thread.sleep(2000);
+		Wait.milliseconds(2000);
+		BasicKeys.scrollLock();
 		acoes.iniciarPrograma();
 		// DBManager dbm = new DBManager();
 		// dbm.bgetDBCollection();

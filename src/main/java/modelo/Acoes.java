@@ -1,40 +1,37 @@
 package modelo;
 
-import java.awt.AWTException;
-import java.net.UnknownHostException;
-
 import utils.Utils;
 
 public class Acoes {
-	public final Integer REPETICOES = 10000;
+	private final Integer REPETICOES = 10000;
 	public static final Integer SPEED_MULTIPLIER = 4;
 	// DBManager dbm = new DBManager();
-	Images images = new Images();
+	private Images images = new Images();
 
-	public static int plantaReward = 0;
-	public static int pfReward = 0;
-	public static int aiDataReward = 0;
-	public static int bioplasticoReward = 0;
-	public static int nanofioReward = 0;
-	public static int bateriaReward = 0;
-	public static int gasolinaReward = 0;
-	public static int medalReward = 0;
-	public static int coinReward = 0;
-	public static int supplyReward = 0;
-	public static int totalRewards = 0;
-	public static String plantaRewardRatio;
-	public static String pfRewardRatio;
-	public static String aiDataRewardRatio;
-	public static String bioplasticoRewardRatio;
-	public static String nanofioRewardRatio;
-	public static String bateriaRewardRatio;
-	public static String gasolinaRewardRatio;
-	public static String medalRewardRatio;
-	public static String coinRewardRatio;
-	public static String supplyRewardRatio;
-	public static boolean questDone = false;
+	private static int plantaReward = 0;
+	private static int pfReward = 0;
+	private static int aiDataReward = 0;
+	private static int bioplasticoReward = 0;
+	private static int nanofioReward = 0;
+	private static int bateriaReward = 0;
+	private static int gasolinaReward = 0;
+	private static int medalReward = 0;
+	private static int coinReward = 0;
+	private static int supplyReward = 0;
+	private static int totalRewards = 0;
+	private static String plantaRewardRatio;
+	private static String pfRewardRatio;
+	private static String aiDataRewardRatio;
+	private static String bioplasticoRewardRatio;
+	private static String nanofioRewardRatio;
+	private static String bateriaRewardRatio;
+	private static String gasolinaRewardRatio;
+	private static String medalRewardRatio;
+	private static String coinRewardRatio;
+	private static String supplyRewardRatio;
+	private static boolean questDone = false;
 
-	public Acoes() throws UnknownHostException {
+	public Acoes() {
 		// List<Integer> quantidades = dbm.getQuantidades();
 		// plantaReward = quantidades.get(0);
 		// pfReward = quantidades.get(1);
@@ -61,14 +58,14 @@ public class Acoes {
 
 	}
 
-	public void iniciarPrograma() throws AWTException, UnknownHostException, InterruptedException {
+	public void iniciarPrograma() {
 		for (int i = 0; i < REPETICOES; i++) {
-
 			Utils.printRunningTime();
 			Utils.printAverageTime(i);
-			Utils.printMedalsPerHour(i);
+			// Utils.printMedalsPerHour(i);
 			int questChecks = 0;
 			int questChecks2 = 0;
+			int questChecks3 = 0;
 			questDone = false;
 			System.out.println("############################# ITERAÇÃO " + (i + 1) + " #############################");
 			deletarDecoracoes();
@@ -77,16 +74,23 @@ public class Acoes {
 				coletarMissaoEspecialMeiaNoite();
 			}
 			while (!questDone) {
-				Utils.wait(1000);
+				Utils.wait(500);
 				questDone = verificaSeQuestDone();
 				questChecks++;
 				questChecks2++;
+				questChecks3++;
+
 				if (questChecks % 10 == 0) {
 					System.out.println("verificando quest: " + questChecks + "%");
 				}
-				if (questChecks > 75) {
+				if (questChecks3 > 10) {
+					deletarDecoracoes();
+					colocarDecoracoes();
+					questChecks3 = 0;
+				}
+				if (questChecks > 50) {
 					if (questChecks2 > 150) {
-						menuQuests();
+						abrirMenuQuests();
 						Utils.wait(300);
 						coletarRecompensa();
 						questChecks2 = 0;
@@ -97,7 +101,7 @@ public class Acoes {
 					break;
 				}
 			}
-			menuQuests();
+			abrirMenuQuests();
 			Utils.wait(100);
 			checkReward();
 			coletarRecompensa();
@@ -110,24 +114,22 @@ public class Acoes {
 			// }
 			verificaSeQuestDone();
 			verificaSeQuestEhDecoracoes();
-			menuQuests();
+			fecharMenuQuests();
 		}
 	}
 
-	public void coletarMissaoEspecialMeiaNoite() throws InterruptedException {
-		System.err.println(new Object() {
-		}.getClass().getEnclosingMethod().getName());
+	public void coletarMissaoEspecialMeiaNoite() {
+		printMethodName();
 		BasicKeys.oito();
-		Thread.sleep(1500);
+		Wait.milliseconds(1500);
 		BasicKeys.nove();
-		Thread.sleep(1500);
+		Wait.milliseconds(1500);
 		BasicKeys.q();
-		Thread.sleep(1500);
-
+		Wait.milliseconds(1500);
 		BasicKeys.zero();
-		Thread.sleep(1500);
+		Wait.milliseconds(1500);
 		BasicKeys.sete();
-		Thread.sleep(1500);
+		Wait.milliseconds(1500);
 	}
 
 	public boolean verificaSeQuestDone() {
@@ -136,20 +138,38 @@ public class Acoes {
 	}
 
 	public void coletarRecompensa() {
-		System.err.println(new Object() {
-		}.getClass().getEnclosingMethod().getName());
+		printMethodName();
 		BasicKeys.um();
 	}
 
-	public void menuQuests() {
-		System.err.println(new Object() {
-		}.getClass().getEnclosingMethod().getName());
+	private static void printMethodName() {
+		System.err.println(new Exception().getStackTrace()[1].getMethodName());
+	}
+
+	public void fecharMenuQuests() {
+		printMethodName();
 		BasicKeys.q();
 	}
 
+	public void abrirMenuQuests() {
+		printMethodName();
+		BasicKeys.esc();
+		BasicKeys.q();
+		for (int i = 0; i < 5; i++) {
+			Wait.milliseconds(800);
+			if (!images.hasImage("opennedQuestMenu")) {
+				System.err.println("Opening Menu Again");
+				BasicKeys.esc();
+				Wait.milliseconds(200);
+				BasicKeys.q();
+			} else {
+				break;
+			}
+		}
+	}
+
 	public void colocarDecoracoes() {
-		System.err.println(new Object() {
-		}.getClass().getEnclosingMethod().getName());
+		printMethodName();
 		BasicKeys.umNumerico();
 		BasicKeys.doisNumerico();
 		BasicKeys.umNumerico();
@@ -169,8 +189,7 @@ public class Acoes {
 	}
 
 	public void deletarDecoracoes() {
-		System.err.println(new Object() {
-		}.getClass().getEnclosingMethod().getName());
+		printMethodName();
 		BasicKeys.maisNumerico();
 		BasicKeys.doisNumerico();
 		BasicKeys.zeroNumerico();
@@ -194,7 +213,7 @@ public class Acoes {
 		boolean questCerta = images.hasImage("quest");
 		int jumps = 0;
 		while (!questCerta) {
-			Utils.wait(4500 / (SPEED_MULTIPLIER));
+			Utils.wait(6200 / (SPEED_MULTIPLIER));
 			questCerta = images.hasImage("quest");
 			if (!questCerta) {
 				BasicKeys.dois();
@@ -241,87 +260,24 @@ public class Acoes {
 		colocarDecoracoes();
 	}
 
-	public void checkRewardAIData() {
-		if (images.hasImage("AIData")) {
-			aiDataReward++;
-			System.err.println("REWARD: AI DATA");
-		}
-	}
-
-	public void checkRewardMedal() {
-		if (images.hasImage("medal")) {
-			medalReward++;
-			System.err.println("REWARD: MEDAL");
-		}
-	}
-
-	public void checkRewardPlanta() {
-		if (images.hasImage("planta")) {
-			plantaReward++;
-			System.err.println("REWARD: PLANTA");
-		}
-	}
-
-	public void checkRewardNanofio() {
-		if (images.hasImage("nanofio")) {
-			nanofioReward++;
-			System.err.println("REWARD: NANOFIO");
-		}
-	}
-
-	public void checkRewardCoin() {
-		if (images.hasImage("coin")) {
-			coinReward++;
-			System.err.println("REWARD: COIN");
-		}
-	}
-
-	public void checkRewardBateria() {
-		if (images.hasImage("bateria")) {
-			bateriaReward++;
-			System.err.println("REWARD: BATERIA");
-		}
-	}
-
-	public void checkRewardSupply() {
-		if (images.hasImage("supply")) {
-			supplyReward++;
-			System.err.println("REWARD: SUPPLY");
-		}
-	}
-
-	public void checkRewardBioplastico() {
-		if (images.hasImage("bioplastico")) {
-			bioplasticoReward++;
-			System.err.println("REWARD: BIOPLÁSTICO");
-		}
-	}
-
-	public void checkRewardPF() {
-		if (images.hasImage("pf")) {
-			pfReward++;
-			System.err.println("REWARD: PF");
-		}
-	}
-
-	public void checkRewardGasolina() {
-		if (images.hasImage("gasolina")) {
-			gasolinaReward++;
-			System.err.println("REWARD: GASOLINA");
+	private void checkGenericReward(String imageName, int reward) {
+		if (images.hasImage(imageName)) {
+			reward++;
+			System.err.println("REWARD: " + imageName.toUpperCase());
 		}
 	}
 
 	public void checkReward() {
-		checkRewardPlanta();
-		checkRewardPF();
-		checkRewardAIData();
-		checkRewardBioplastico();
-		checkRewardNanofio();
-		checkRewardBateria();
-		checkRewardGasolina();
-		checkRewardMedal();
-		checkRewardCoin();
-		checkRewardSupply();
+		checkGenericReward("planta", plantaReward);
+		checkGenericReward("pf", pfReward);
+		checkGenericReward("AIData", aiDataReward);
+		checkGenericReward("bioplastico", bioplasticoReward);
+		checkGenericReward("nanofio", nanofioReward);
+		checkGenericReward("bateria", bateriaReward);
+		checkGenericReward("gasolina", gasolinaReward);
+		checkGenericReward("medal", medalReward);
+		checkGenericReward("coin", coinReward);
+		checkGenericReward("supply", supplyReward);
 		showCurrentRewards();
 	}
 

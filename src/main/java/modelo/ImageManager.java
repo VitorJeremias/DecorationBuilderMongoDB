@@ -20,7 +20,6 @@ public class ImageManager {
 		}
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
-
 				boolean invalid = false;
 				int k = x, l = y;
 				for (int a = 0; a < bi.getWidth(); a++) {
@@ -38,9 +37,7 @@ public class ImageManager {
 					} else {
 						k++;
 					}
-
 				}
-
 				if (!invalid) {
 					return true;
 				}
