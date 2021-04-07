@@ -120,6 +120,7 @@ public class Acoes {
 
 	public void coletarMissaoEspecialMeiaNoite() {
 		printMethodName();
+		refreshPage();
 		BasicKeys.oito();
 		Wait.milliseconds(1500);
 		BasicKeys.nove();
