@@ -8,10 +8,9 @@ import utils.FileManager;
 public class DecorationsBuilderMain {
 	public static void main(String[] args) {
 		FileManager.runAhkScript();
-		Acoes acoes = new Acoes();
 		Wait.milliseconds(2000);
-		BasicKeys.scrollLock();
-		acoes.iniciarPrograma();
+		new BasicKeys().scrollLock();
+		new Acoes().iniciarPrograma();
 		// DBManager dbm = new DBManager();
 		// dbm.bgetDBCollection();
 

@@ -7,6 +7,8 @@ public class Acoes {
 	public static final Integer SPEED_MULTIPLIER = 4;
 	// DBManager dbm = new DBManager();
 	private Images images = new Images();
+	private InputManager inputManager = new InputManager();
+	private BasicKeys basicKeys = new BasicKeys();
 
 	private static int plantaReward = 0;
 	private static int pfReward = 0;
@@ -43,18 +45,29 @@ public class Acoes {
 		// medalReward = quantidades.get(7);
 		// coinReward = quantidades.get(8);
 		// supplyReward = quantidades.get(9);
-		// totalRewards = plantaReward + pfReward + aiDataReward + bioplasticoReward + nanofioReward + bateriaReward
+		// totalRewards = plantaReward + pfReward + aiDataReward + bioplasticoReward +
+		// nanofioReward + bateriaReward
 		// + gasolinaReward + medalReward + coinReward + supplyReward;
-		// plantaRewardRatio = String.format("%.02f", 100 * (double) plantaReward / (double) totalRewards);
-		// pfRewardRatio = String.format("%.02f", 100 * (double) pfReward / (double) totalRewards);
-		// aiDataRewardRatio = String.format("%.02f", 100 * (double) aiDataReward / (double) totalRewards);
-		// bioplasticoRewardRatio = String.format("%.02f", 100 * (double) bioplasticoReward / (double) totalRewards);
-		// nanofioRewardRatio = String.format("%.02f", 100 * (double) nanofioReward / (double) totalRewards);
-		// bateriaRewardRatio = String.format("%.02f", 100 * (double) bateriaReward / (double) totalRewards);
-		// gasolinaRewardRatio = String.format("%.02f", 100 * (double) gasolinaReward / (double) totalRewards);
-		// medalRewardRatio = String.format("%.02f", 100 * (double) medalReward / (double) totalRewards);
-		// coinRewardRatio = String.format("%.02f", 100 * (double) coinReward / (double) totalRewards);
-		// supplyRewardRatio = String.format("%.02f", 100 * (double) supplyReward / (double) totalRewards);
+		// plantaRewardRatio = String.format("%.02f", 100 * (double) plantaReward /
+		// (double) totalRewards);
+		// pfRewardRatio = String.format("%.02f", 100 * (double) pfReward / (double)
+		// totalRewards);
+		// aiDataRewardRatio = String.format("%.02f", 100 * (double) aiDataReward /
+		// (double) totalRewards);
+		// bioplasticoRewardRatio = String.format("%.02f", 100 * (double)
+		// bioplasticoReward / (double) totalRewards);
+		// nanofioRewardRatio = String.format("%.02f", 100 * (double) nanofioReward /
+		// (double) totalRewards);
+		// bateriaRewardRatio = String.format("%.02f", 100 * (double) bateriaReward /
+		// (double) totalRewards);
+		// gasolinaRewardRatio = String.format("%.02f", 100 * (double) gasolinaReward /
+		// (double) totalRewards);
+		// medalRewardRatio = String.format("%.02f", 100 * (double) medalReward /
+		// (double) totalRewards);
+		// coinRewardRatio = String.format("%.02f", 100 * (double) coinReward / (double)
+		// totalRewards);
+		// supplyRewardRatio = String.format("%.02f", 100 * (double) supplyReward /
+		// (double) totalRewards);
 
 	}
 
@@ -74,7 +87,7 @@ public class Acoes {
 				coletarMissaoEspecialMeiaNoite();
 			}
 			while (!questDone) {
-				Utils.wait(500);
+				Wait.milliseconds(500);
 				questDone = verificaSeQuestDone();
 				questChecks++;
 				questChecks2++;
@@ -91,7 +104,7 @@ public class Acoes {
 				if (questChecks > 50) {
 					if (questChecks2 > 150) {
 						abrirMenuQuests();
-						Utils.wait(300);
+						Wait.milliseconds(300);
 						coletarRecompensa();
 						questChecks2 = 0;
 						break;
@@ -102,12 +115,12 @@ public class Acoes {
 				}
 			}
 			abrirMenuQuests();
-			Utils.wait(100);
+			Wait.milliseconds(100);
 			checkReward();
 			coletarRecompensa();
 			for (int j = 0; j < 10; j++) {
-				InputManager.zoomOut();
-				Utils.wait(100);
+				inputManager.zoomOut();
+				Wait.milliseconds(100);
 			}
 			// if (i % 10 == 0) {
 			// dbm.updateData();
@@ -121,26 +134,25 @@ public class Acoes {
 	public void coletarMissaoEspecialMeiaNoite() {
 		printMethodName();
 		refreshPage();
-		BasicKeys.oito();
+		basicKeys.oito();
 		Wait.milliseconds(1500);
-		BasicKeys.nove();
+		basicKeys.nove();
 		Wait.milliseconds(1500);
-		BasicKeys.q();
+		basicKeys.q();
 		Wait.milliseconds(1500);
-		BasicKeys.zero();
+		basicKeys.zero();
 		Wait.milliseconds(1500);
-		BasicKeys.sete();
+		basicKeys.sete();
 		Wait.milliseconds(1500);
 	}
 
 	public boolean verificaSeQuestDone() {
-		boolean foundQuestDone = images.hasImage("questDone");
-		return foundQuestDone;
+		return images.hasImage("questDone");
 	}
 
 	public void coletarRecompensa() {
 		printMethodName();
-		BasicKeys.um();
+		basicKeys.um();
 	}
 
 	private static void printMethodName() {
@@ -149,20 +161,20 @@ public class Acoes {
 
 	public void fecharMenuQuests() {
 		printMethodName();
-		BasicKeys.q();
+		basicKeys.q();
 	}
 
 	public void abrirMenuQuests() {
 		printMethodName();
-		BasicKeys.esc();
-		BasicKeys.q();
+		basicKeys.esc();
+		basicKeys.q();
 		for (int i = 0; i < 5; i++) {
 			Wait.milliseconds(800);
 			if (!images.hasImage("opennedQuestMenu")) {
 				System.err.println("Opening Menu Again");
-				BasicKeys.esc();
+				basicKeys.esc();
 				Wait.milliseconds(200);
-				BasicKeys.q();
+				basicKeys.q();
 			} else {
 				break;
 			}
@@ -171,54 +183,54 @@ public class Acoes {
 
 	public void colocarDecoracoes() {
 		printMethodName();
-		BasicKeys.umNumerico();
-		BasicKeys.doisNumerico();
-		BasicKeys.umNumerico();
-		BasicKeys.tresNumerico();
-		BasicKeys.umNumerico();
-		BasicKeys.quatroNumerico();
-		BasicKeys.umNumerico();
-		BasicKeys.cincoNumerico();
-		BasicKeys.umNumerico();
-		BasicKeys.seisNumerico();
-		BasicKeys.umNumerico();
-		BasicKeys.seteNumerico();
-		BasicKeys.umNumerico();
-		BasicKeys.oitoNumerico();
-		BasicKeys.umNumerico();
-		BasicKeys.noveNumerico();
+		basicKeys.umNumerico();
+		basicKeys.doisNumerico();
+		basicKeys.umNumerico();
+		basicKeys.tresNumerico();
+		basicKeys.umNumerico();
+		basicKeys.quatroNumerico();
+		basicKeys.umNumerico();
+		basicKeys.cincoNumerico();
+		basicKeys.umNumerico();
+		basicKeys.seisNumerico();
+		basicKeys.umNumerico();
+		basicKeys.seteNumerico();
+		basicKeys.umNumerico();
+		basicKeys.oitoNumerico();
+		basicKeys.umNumerico();
+		basicKeys.noveNumerico();
 	}
 
 	public void deletarDecoracoes() {
 		printMethodName();
-		BasicKeys.maisNumerico();
-		BasicKeys.doisNumerico();
-		BasicKeys.zeroNumerico();
-		BasicKeys.tresNumerico();
-		BasicKeys.zeroNumerico();
-		BasicKeys.quatroNumerico();
-		BasicKeys.zeroNumerico();
-		BasicKeys.cincoNumerico();
-		BasicKeys.zeroNumerico();
-		BasicKeys.seisNumerico();
-		BasicKeys.zeroNumerico();
-		BasicKeys.seteNumerico();
-		BasicKeys.zeroNumerico();
-		BasicKeys.oitoNumerico();
-		BasicKeys.zeroNumerico();
-		BasicKeys.noveNumerico();
-		BasicKeys.zeroNumerico();
+		basicKeys.maisNumerico();
+		basicKeys.doisNumerico();
+		basicKeys.zeroNumerico();
+		basicKeys.tresNumerico();
+		basicKeys.zeroNumerico();
+		basicKeys.quatroNumerico();
+		basicKeys.zeroNumerico();
+		basicKeys.cincoNumerico();
+		basicKeys.zeroNumerico();
+		basicKeys.seisNumerico();
+		basicKeys.zeroNumerico();
+		basicKeys.seteNumerico();
+		basicKeys.zeroNumerico();
+		basicKeys.oitoNumerico();
+		basicKeys.zeroNumerico();
+		basicKeys.noveNumerico();
+		basicKeys.zeroNumerico();
 	}
 
 	public void verificaSeQuestEhDecoracoes() {
 		boolean questCerta = images.hasImage("quest");
 		int jumps = 0;
 		while (!questCerta) {
-			Utils.wait(6200 / (SPEED_MULTIPLIER));
+			Wait.milliseconds(6200 / (SPEED_MULTIPLIER));
 			questCerta = images.hasImage("quest");
 			if (!questCerta) {
-				BasicKeys.dois();
-				BasicKeys.tres();
+				basicKeys.dois();
+				basicKeys.tres();
 				jumps++;
 				System.out.println("Pulou " + jumps);
 				if (jumps > 90) {
@@ -227,36 +239,36 @@ public class Acoes {
 				}
 			}
 		}
-		Utils.wait(2000);
+		Wait.milliseconds(2000);
 	}
 
 	public void refreshPage() {
-		BasicKeys.seis();
-		Utils.wait(15000);
-		BasicKeys.esc();
-		Utils.wait(300);
-		BasicKeys.apertarBaixo();
-		BasicKeys.apertarDireita();
-		Utils.wait(4000);
-		BasicKeys.apertarBaixo();
-		BasicKeys.apertarDireita();
-		Utils.wait(100);
-		BasicKeys.soltarBaixo(); // termina o posicionamento da tela
-		Utils.wait(100);
-		BasicKeys.soltarDireita();
-		Utils.wait(200);
-		BasicKeys.sete();
-		Utils.wait(200);
-		InputManager.zoomIn();
-		Utils.wait(1000);
-		InputManager.zoomIn();
-		Utils.wait(1000);
-		InputManager.zoomOut();
-		Utils.wait(1000);
-		BasicKeys.b(); // abre menu de construcao
-		Utils.wait(1000);
-		BasicKeys.cinco(); // decoracoes
-		Utils.wait(200);
+		basicKeys.seis();
+		Wait.milliseconds(15000);
+		basicKeys.esc();
+		Wait.milliseconds(300);
+		basicKeys.apertarBaixo();
+		basicKeys.apertarDireita();
+		Wait.milliseconds(4000);
+		basicKeys.apertarBaixo();
+		basicKeys.apertarDireita();
+		Wait.milliseconds(100);
+		basicKeys.soltarBaixo(); // termina o posicionamento da tela
+		Wait.milliseconds(100);
+		basicKeys.soltarDireita();
+		Wait.milliseconds(200);
+		basicKeys.sete();
+		Wait.milliseconds(200);
+		inputManager.zoomIn();
+		Wait.milliseconds(1000);
+		inputManager.zoomIn();
+		Wait.milliseconds(1000);
+		inputManager.zoomOut();
+		Wait.milliseconds(1000);
+		basicKeys.b(); // abre menu de construcao
+		Wait.milliseconds(1000);
+		basicKeys.cinco(); // decoracoes
+		Wait.milliseconds(200);
 		deletarDecoracoes();
 		colocarDecoracoes();
 	}

@@ -3,48 +3,35 @@ package modelo;
 import java.awt.AWTException;
 import java.awt.Robot;
 
-import utils.Utils;
-
 public class InputManager {
 
 	private static Robot robot;
 
-	public static void apertarTecla(int keycode) {
+	public InputManager() {
 		try {
 			robot = new Robot();
-			robot.keyPress(keycode);
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
-
-		Utils.wait(980 / Acoes.SPEED_MULTIPLIER);
 	}
 
-	public static void digitar(int keycode) {
-		try {
-			robot = new Robot();
-			robot.keyPress(keycode);
-			Wait.milliseconds(50);
-			robot.keyRelease(keycode);
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}
-		Utils.wait(980 / Acoes.SPEED_MULTIPLIER);
+	public void apertarTecla(int keycode) {
+		robot.keyPress(keycode);
+		Wait.milliseconds(980 / Acoes.SPEED_MULTIPLIER);
 	}
 
-	public static void soltarTecla(int keycode) {
-		try {
-			robot = new Robot();
-			robot.keyRelease(keycode);
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}
-
-		// Utils.wait(1400 / Acoes.SPEED_MULTIPLIER);
-
+	public void digitar(int keycode) {
+		robot.keyPress(keycode);
+		Wait.milliseconds(50);
+		robot.keyRelease(keycode);
+		Wait.milliseconds(980 / Acoes.SPEED_MULTIPLIER);
 	}
 
-	public static void digitarRapido(int keycode) {
+	public void soltarTecla(int keycode) {
+		robot.keyRelease(keycode);
+	}
+
+	public void digitarRapido(int keycode) {
 		try {
 			robot = new Robot();
 			robot.keyPress(keycode);
@@ -53,7 +40,7 @@ public class InputManager {
 		}
 	}
 
-	public static void zoomIn() {
+	public void zoomIn() {
 		try {
 			robot = new Robot();
 			robot.mouseWheel(-1);
@@ -62,7 +49,7 @@ public class InputManager {
 		}
 	}
 
-	public static void zoomOut() {
+	public void zoomOut() {
 		try {
 			robot = new Robot();
 			robot.mouseWheel(1);

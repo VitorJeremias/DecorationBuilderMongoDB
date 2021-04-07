@@ -11,14 +11,6 @@ public class Utils {
 	static long startTime = System.nanoTime();
 	static int MEDALS_PER_QUEST = 7425;
 
-	public static void wait(int d) {
-		try {
-			Thread.sleep(d);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static int getRunningTime() {
 		long currentTime = System.nanoTime() - startTime;
 		long runTime = TimeUnit.SECONDS.convert(currentTime, TimeUnit.NANOSECONDS);
